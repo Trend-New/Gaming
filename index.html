@@ -9,7 +9,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
-  <!-- ===== GTranslate + Monetization CSS ===== -->
   <style>
     :root{
       --bg:#111213;
@@ -23,50 +22,33 @@
       --gold:#e8b84b;
     }
     *{margin:0;padding:0;box-sizing:border-box;}
-    body{
-      background:var(--bg);
-      color:var(--text);
-      font-family:'Archivo',system-ui,sans-serif;
-      line-height:1.55;
-    }
+    body{background:var(--bg);color:var(--text);font-family:'Archivo',system-ui,sans-serif;line-height:1.55;}
     a{color:inherit;}
     .wrap{max-width:1240px;margin:0 auto;padding:0 1.25rem;}
     img{display:block;}
-
-    /* utility bar */
     .utility{background:#000;font-size:.72rem;color:var(--text-dim);}
     .utility .wrap{display:flex;justify-content:space-between;align-items:center;height:34px;}
     .utility a{text-decoration:none;color:var(--text-dim);margin-left:1rem;transition:color .15s;}
     .utility a:hover{color:var(--red);}
-
-    /* header */
     header.main{background:var(--bg);border-bottom:3px solid var(--red);position:sticky;top:0;z-index:50;}
     .header-row{display:flex;align-items:center;justify-content:space-between;height:64px;gap:1.5rem;}
     .brand{font-family:'Archivo Black',sans-serif;font-size:1.5rem;letter-spacing:-.5px;white-space:nowrap;}
     .brand span{color:var(--red);}
     nav.primary{display:flex;gap:0;flex:1;}
-    nav.primary a{
-      text-decoration:none;color:var(--text);font-weight:700;font-size:.82rem;
-      text-transform:uppercase;letter-spacing:.4px;padding:0 .85rem;height:64px;
-      display:flex;align-items:center;border-bottom:3px solid transparent;transition:.15s;
-    }
+    nav.primary a{text-decoration:none;color:var(--text);font-weight:700;font-size:.82rem;text-transform:uppercase;letter-spacing:.4px;padding:0 .85rem;height:64px;display:flex;align-items:center;border-bottom:3px solid transparent;transition:.15s;}
     nav.primary a:hover, nav.primary a.active{color:var(--red);border-bottom-color:var(--red);}
     .header-actions{display:flex;align-items:center;gap:.75rem;}
     .search-pill{display:flex;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:.4rem .7rem;}
     .search-pill input{background:transparent;border:none;outline:none;color:var(--text);width:150px;font-size:.85rem;}
     .search-pill i{color:var(--text-dim);font-size:.85rem;}
-    .btn-signup{background:var(--red);color:#fff;font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.4px;
-      padding:.55rem 1rem;border-radius:3px;text-decoration:none;white-space:nowrap;transition:background .15s;}
+    .btn-signup{background:var(--red);color:#fff;font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.4px;padding:.55rem 1rem;border-radius:3px;text-decoration:none;white-space:nowrap;transition:background .15s;}
     .btn-signup:hover{background:var(--red-dark);}
-
-    /* hero */
     .hero{display:grid;grid-template-columns:2fr 1fr;gap:2px;margin:2px 0 2.5rem;background:var(--line);}
     .hero-feature{position:relative;background:#000;min-height:440px;overflow:hidden;}
     .hero-feature img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:.75;}
     .hero-feature .overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.92) 0%,rgba(0,0,0,.35) 55%,transparent 100%);}
     .hero-feature .txt{position:absolute;left:0;right:0;bottom:0;padding:2rem;}
-    .tag{display:inline-block;background:var(--red);color:#fff;font-size:.68rem;font-weight:700;text-transform:uppercase;
-      letter-spacing:.6px;padding:.25rem .6rem;border-radius:2px;margin-bottom:.7rem;}
+    .tag{display:inline-block;background:var(--red);color:#fff;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;padding:.25rem .6rem;border-radius:2px;margin-bottom:.7rem;}
     .hero-feature h1{font-family:'Archivo Black',sans-serif;font-size:2.1rem;line-height:1.1;max-width:640px;}
     .hero-feature p{color:var(--text-dim);margin-top:.6rem;max-width:560px;font-size:.95rem;}
     .hero-list{display:flex;flex-direction:column;gap:2px;background:var(--line);}
@@ -75,64 +57,44 @@
     .hero-list-item img{width:96px;height:72px;object-fit:cover;border-radius:2px;flex-shrink:0;}
     .hero-list-item .tag-sm{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--red);display:block;margin-bottom:.25rem;}
     .hero-list-item h3{font-size:.88rem;font-weight:600;line-height:1.3;color:var(--text);}
-
-    /* section head */
     .section-head{display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid var(--line);padding-bottom:.6rem;margin-bottom:1.4rem;}
-    .section-head h2{font-family:'Archivo Black',sans-serif;font-size:1.15rem;text-transform:uppercase;letter-spacing:.3px;
-      border-left:5px solid var(--red);padding-left:.6rem;}
+    .section-head h2{font-family:'Archivo Black',sans-serif;font-size:1.15rem;text-transform:uppercase;letter-spacing:.3px;border-left:5px solid var(--red);padding-left:.6rem;}
     .section-head a{font-size:.78rem;font-weight:700;text-transform:uppercase;color:var(--text-dim);text-decoration:none;letter-spacing:.4px;}
     .section-head a:hover{color:var(--red);}
     section.block{margin-bottom:3rem;}
-
-    /* filter chips */
     .chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.75rem;}
     .chip{background:var(--panel);border:1px solid var(--line);padding:.35rem 1rem;border-radius:20px;font-size:.78rem;font-weight:600;color:var(--text-dim);}
     .chip.active{background:var(--red);border-color:var(--red);color:#fff;}
-
-    /* grids */
     .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;}
     .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem;}
     .card{background:var(--panel);border:1px solid var(--line);border-radius:3px;overflow:hidden;transition:transform .15s,border-color .15s;}
     .card:hover{transform:translateY(-3px);border-color:var(--red);}
     .card img{width:100%;height:170px;object-fit:cover;}
     .card .body{padding:1rem 1.1rem 1.2rem;}
-    .platform{display:inline-block;font-size:.63rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;
-      color:var(--gold);margin-bottom:.4rem;}
+    .platform{display:inline-block;font-size:.63rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--gold);margin-bottom:.4rem;}
     .card h3{font-size:1rem;font-weight:700;line-height:1.35;margin-bottom:.5rem;}
     .card h3 a{text-decoration:none;color:var(--text);}
     .card h3 a:hover{color:var(--red);}
     .card p{color:var(--text-dim);font-size:.85rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
     .meta{display:flex;gap:1rem;font-size:.72rem;color:var(--text-dim);margin-top:.8rem;padding-top:.7rem;border-top:1px solid var(--line);}
-    .score-badge{display:inline-flex;align-items:center;justify-content:center;background:var(--red);color:#fff;
-      font-family:'Archivo Black',sans-serif;font-size:1rem;width:42px;height:42px;border-radius:4px;flex-shrink:0;}
-
-    /* review cards */
+    .score-badge{display:inline-flex;align-items:center;justify-content:center;background:var(--red);color:#fff;font-family:'Archivo Black',sans-serif;font-size:1rem;width:42px;height:42px;border-radius:4px;flex-shrink:0;}
     .review-card{display:flex;gap:1rem;background:var(--panel);border:1px solid var(--line);border-radius:3px;overflow:hidden;}
     .review-card img{width:200px;height:150px;object-fit:cover;flex-shrink:0;}
     .review-card .body{padding:1rem 1.1rem 1rem 0;display:flex;flex-direction:column;}
-
-    /* countdown */
-    .countdown{background:#111213;border:1px solid var(--red-dark);border-radius:4px;
-      padding:2.2rem 1.5rem;text-align:center;margin-bottom:3rem;}
+    .countdown{background:#111213;border:1px solid var(--red-dark);border-radius:4px;padding:2.2rem 1.5rem;text-align:center;margin-bottom:3rem;}
     .countdown h2{font-family:'Archivo Black',sans-serif;font-size:1.7rem;text-transform:uppercase;color:#fff;}
     .countdown h2 span{color:var(--red);}
     .countdown p{color:#b3b3b3;margin-top:.3rem;font-size:.9rem;}
     .countdown-grid{display:flex;justify-content:center;gap:1.6rem;margin-top:1.3rem;}
-    .countdown-grid .num{font-family:'Archivo Black',sans-serif;font-size:2.1rem;background:#000;border:1px solid #2c2c2c;
-      border-radius:4px;padding:.3rem .9rem;min-width:70px;display:inline-block;color:#fff;}
+    .countdown-grid .num{font-family:'Archivo Black',sans-serif;font-size:2.1rem;background:#000;border:1px solid #2c2c2c;border-radius:4px;padding:.3rem .9rem;min-width:70px;display:inline-block;color:#fff;}
     .countdown-grid .lbl{display:block;font-size:.65rem;text-transform:uppercase;letter-spacing:1px;color:#b3b3b3;margin-top:.35rem;}
-
-    /* newsletter */
     .newsletter{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:2.2rem;text-align:center;margin-bottom:3rem;}
     .newsletter h2{font-family:'Archivo Black',sans-serif;font-size:1.3rem;text-transform:uppercase;}
     .newsletter p{color:var(--text-dim);margin:.4rem 0 1.2rem;font-size:.9rem;}
     .newsletter form{display:flex;justify-content:center;gap:.6rem;flex-wrap:wrap;}
     .newsletter input{background:#000;border:1px solid var(--line);border-radius:3px;padding:.65rem 1rem;color:var(--text);width:280px;font-size:.85rem;}
-    .newsletter button{background:var(--red);border:none;border-radius:3px;padding:.65rem 1.6rem;font-weight:700;
-      text-transform:uppercase;letter-spacing:.4px;color:#fff;cursor:pointer;font-size:.82rem;transition:background .15s;}
+    .newsletter button{background:var(--red);border:none;border-radius:3px;padding:.65rem 1.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#fff;cursor:pointer;font-size:.82rem;transition:background .15s;}
     .newsletter button:hover{background:var(--red-dark);}
-
-    /* footer */
     footer{border-top:3px solid var(--red);background:#000;padding:2.5rem 0 1.5rem;margin-top:1rem;color:#fff;}
     .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2rem;margin-bottom:2rem;}
     .footer-grid h4{font-size:.85rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:.7rem;color:#fff;}
@@ -142,43 +104,17 @@
     .footer-grid ul a:hover{color:var(--red);}
     .footer-social a{color:#b3b3b3;margin-right:.9rem;font-size:1.1rem;transition:color .15s;}
     .footer-social a:hover{color:var(--red);}
-    .footer-bottom{border-top:1px solid #2c2c2c;padding-top:1.1rem;display:flex;justify-content:space-between;
-      font-size:.75rem;color:#b3b3b3;flex-wrap:wrap;gap:.5rem;}
-
-    @media (max-width:960px){
-      .hero{grid-template-columns:1fr;}
-      .grid-3{grid-template-columns:1fr 1fr;}
-      .grid-2{grid-template-columns:1fr;}
-      .footer-grid{grid-template-columns:1fr 1fr;}
-      nav.primary{display:none;}
-    }
-    @media (max-width:620px){
-      .grid-3{grid-template-columns:1fr;}
-      .footer-grid{grid-template-columns:1fr;}
-      .review-card{flex-direction:column;}
-      .review-card img{width:100%;height:180px;}
-      .header-row{flex-wrap:wrap;height:auto;padding:.7rem 0;}
-      .search-pill{display:none;}
-    }
-
-    /* banner container */
-    .banner-top { 
-      background: #0a0a0b; 
-      text-align: center; 
-      padding: 0.75rem 0.5rem; 
-      border-bottom: 1px solid var(--line);
-      margin-bottom: 0.5rem;
-    }
-    .banner-top ins { display: inline-block; }
+    .footer-bottom{border-top:1px solid #2c2c2c;padding-top:1.1rem;display:flex;justify-content:space-between;font-size:.75rem;color:#b3b3b3;flex-wrap:wrap;gap:.5rem;}
+    @media (max-width:960px){.hero{grid-template-columns:1fr;}.grid-3{grid-template-columns:1fr 1fr;}.grid-2{grid-template-columns:1fr;}.footer-grid{grid-template-columns:1fr 1fr;}nav.primary{display:none;}}
+    @media (max-width:620px){.grid-3{grid-template-columns:1fr;}.footer-grid{grid-template-columns:1fr;}.review-card{flex-direction:column;}.review-card img{width:100%;height:180px;}.header-row{flex-wrap:wrap;height:auto;padding:.7rem 0;}.search-pill{display:none;}}
+    .banner-top{background:#0a0a0b;text-align:center;padding:0.75rem 0.5rem;border-bottom:1px solid var(--line);margin-bottom:0.5rem;}
+    .banner-top ins{display:inline-block;}
   </style>
 </head>
 <body>
 
-<!-- ===== BANNER AD (slot-1) at top of body ===== -->
 <div id="banner-slot-1" class="banner-top"></div>
-<!-- other banner slots will be placed via JS -->
 
-<!-- ===== ORIGINAL WEBSITE CONTENT ===== -->
 <div class="utility">
   <div class="wrap">
     <span><i class="fas fa-gamepad"></i>&nbsp; GameHub · since 2024</span>
@@ -293,7 +229,6 @@
     </div>
   </section>
 
-  <!-- empty containers for scroll-triggered banners -->
   <div id="banner-slot-2" style="margin: 2rem 0; text-align:center; min-height:50px;"></div>
   <div id="banner-slot-3" style="margin: 2rem 0; text-align:center; min-height:50px;"></div>
   <div id="banner-slot-4" style="margin: 2rem 0; text-align:center; min-height:50px;"></div>
@@ -371,10 +306,9 @@
   </div>
 </footer>
 
-<!-- ===== COUNTDOWN SCRIPT (original) ===== -->
 <script>
 (function(){
-  const targetDate = new Date('2025-12-31T00:00:00').getTime();
+  const targetDate = new Date('2026-12-31T00:00:00').getTime();
   const daysEl = document.getElementById('days');
   const hoursEl = document.getElementById('hours');
   const minutesEl = document.getElementById('minutes');
@@ -403,14 +337,14 @@
 (function () {
   "use strict";
 
-  // ============ Timing configuration (in milliseconds) ============
   const CONFIG = {
-    minGapBetweenPops: 10000,     // Minimum gap between any two popup-style ads (10s)
-    scrollBannerThreshold: 0.25,  // Every 25% of page height triggers a new banner
-    popupScrollThreshold: 0.60,   // Pop up triggers once visitor scrolls past 60%
+    minGapBetweenPops: 10000,
+    scrollBannerThreshold: 0.25,
+    popupScrollThreshold: 0.60,
   };
 
   let lastPopTimestamp = 0;
+  let responsiveJsLoaded = false; // ensures the shared loader script is only injected once
 
   function canShowPop() {
     const now = Date.now();
@@ -421,7 +355,6 @@
     return false;
   }
 
-  // Helper: injects a <script src="..."> tag into the page (for popunder/popup tags)
   function injectScriptTag(src) {
     const s = document.createElement("script");
     s.type = "text/javascript";
@@ -430,8 +363,15 @@
     document.body.appendChild(s);
   }
 
-  // Helper: renders a banner <ins> ad inside a given container, then loads
-  // the responsive.js loader so the network script picks it up.
+  function ensureResponsiveLoaderLoaded() {
+    if (responsiveJsLoaded) return;
+    responsiveJsLoaded = true;
+    const s = document.createElement("script");
+    s.src = "//data527.click/js/responsive.js";
+    s.async = true;
+    document.body.appendChild(s);
+  }
+
   function injectBannerAd(containerId, insHTML) {
     const container = document.getElementById(containerId);
     if (!container) {
@@ -439,14 +379,8 @@
       return;
     }
     container.innerHTML = insHTML;
-
-    const s = document.createElement("script");
-    s.src = "//data527.click/js/responsive.js";
-    s.async = true;
-    document.body.appendChild(s);
+    ensureResponsiveLoaderLoaded();
   }
-
-  // ============ Real Advertica Tags ============
 
   const BANNER_1_HTML =
     '<ins style="width: 300px;height:1050px" data-width="300" data-height="1050" ' +
@@ -474,13 +408,11 @@
   const POPUP_SRC =
     "//data527.click/e31597fecb27d40d3e23/74f935d1cc/?placementName=1";
 
-  // ============ 1. Banner Ad Tag - shown immediately on page load ============
   function loadFirstBanner() {
     injectBannerAd("banner-slot-1", BANNER_1_HTML);
     console.log("Banner #1 loaded on page load");
   }
 
-  // ============ 2-4. Banner Ad Tags - rotate via Scroll Trigger ============
   const scrollBanners = [
     function () {
       injectBannerAd("banner-slot-2", BANNER_2_HTML);
@@ -514,7 +446,6 @@
     });
   }
 
-  // ============ 5. Smartlink / Pop under - triggered on first click ============
   function initPopUnder() {
     let fired = false;
     document.addEventListener("click", function () {
@@ -526,7 +457,6 @@
     });
   }
 
-  // ============ 6. Pop up - SCROLL-BASED, with pending-retry logic ============
   function initScrollTriggeredPopup() {
     let fired = false;
     let pending = false;
@@ -549,7 +479,6 @@
     });
   }
 
-  // ============ Run everything once the page has loaded ============
   document.addEventListener("DOMContentLoaded", function () {
     loadFirstBanner();
     initScrollBanners();
@@ -561,4 +490,3 @@
 
 </body>
 </html>
-```
