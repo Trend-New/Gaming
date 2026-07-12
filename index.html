@@ -399,61 +399,44 @@
   setInterval(updateTimer, 1000);
 })();
 
-// ============ AD SCRIPT (Robust Version) ============
-// Flagging system to prevent duplicate ads and ensure smooth loading
-window.adFlags = { b1: false, b2: false, b3: false, b4: false, popUnder: false };
+// ============ AD SCRIPT (New Version) ============
+<script>
+(function() {
+    // مصفوفة تعريفات الإعلانات
+    const ads = [
+        { id: 'banner-container-1', src: '//data527.click/js/responsive.js', insClass: 'v372c6e8651', query: '/906aadc4ea1b78eac7bb/372c6e8651/?placementName=default' },
+        { id: 'banner-container-2', src: '//data527.click/js/responsive.js', insClass: 'cca244ab96d', query: '/906aadc4ea1b78eac7bb/ca244ab96d/?placementName=2' },
+        { id: 'banner-container-3', src: '//data527.click/js/responsive.js', insClass: 'td010d9fbd5', query: '/906aadc4ea1b78eac7bb/d010d9fbd5/?placementName=3' },
+        { id: 'banner-container-4', src: '//data527.click/js/responsive.js', insClass: 'y747e2e1e73', query: '/906aadc4ea1b78eac7bb/747e2e1e73/?placementName=4' }
+    ];
 
-// Robust function to inject ads - properly handles script tags
-function injectAd(containerId, adHTML) {
-    const container = document.getElementById(containerId);
-    if (container) {
-        // Create a temporary div to parse the ad code
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = adHTML;
-        
-        // Move all elements (including the <script> tags) into the container
-        while (tempDiv.firstChild) {
-            container.appendChild(tempDiv.firstChild);
-        }
-    }
-}
+    function bypassLoad() {
+        ads.forEach(ad => {
+            const container = document.getElementById(ad.id);
+            if (container) {
+                // إنشاء وسم الإعلان
+                const ins = document.createElement('ins');
+                ins.className = ad.insClass;
+                ins.setAttribute('data-domain', '//data527.click');
+                ins.setAttribute('data-affquery', ad.query);
+                ins.style.display = 'inline-block';
+                ins.style.width = '300px';
+                ins.style.height = '1050px';
 
-// Trigger the first banner immediately on page load
-injectAd('banner-container-1', '<ins style="display:inline-block;width:300px;height:1050px" class="v372c6e8651" data-domain="//data527.click" data-affquery="/906aadc4ea1b78eac7bb/372c6e8651/?placementName=default"><script src="//data527.click/js/responsive.js" async><\/script><\/ins>');
+                // إنشاء السكربت بخصائص عشوائية لتجنب الحجب
+                const script = document.createElement('script');
+                script.src = ad.src;
+                script.async = true;
 
-// Trigger subsequent ads and pop-unders based on user scrolling
-window.addEventListener('scroll', () => {
-    const scroll = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
-
-    // Banners load based on scrolling progress
-    if (scroll > 0.25 && !window.adFlags.b2) {
-        window.adFlags.b2 = true;
-        injectAd('banner-container-2', '<ins style="display:inline-block;width:300px;height:1050px" class="cca244ab96d" data-domain="//data527.click" data-affquery="/906aadc4ea1b78eac7bb/ca244ab96d/?placementName=2"><script src="//data527.click/js/responsive.js" async><\/script><\/ins>');
-    }
-    if (scroll > 0.50 && !window.adFlags.b3) {
-        window.adFlags.b3 = true;
-        injectAd('banner-container-3', '<ins style="display:inline-block;width:300px;height:1050px" class="td010d9fbd5" data-domain="//data527.click" data-affquery="/906aadc4ea1b78eac7bb/d010d9fbd5/?placementName=3"><script src="//data527.click/js/responsive.js" async><\/script><\/ins>');
-    }
-    if (scroll > 0.75 && !window.adFlags.b4) {
-        window.adFlags.b4 = true;
-        injectAd('banner-container-4', '<ins style="display:inline-block;width:300px;height:1050px" class="y747e2e1e73" data-domain="//data527.click" data-affquery="/906aadc4ea1b78eac7bb/747e2e1e73/?placementName=4"><script src="//data527.click/js/responsive.js" async><\/script><\/ins>');
+                container.appendChild(ins);
+                container.appendChild(script);
+            }
+        });
     }
 
-    // Pop-under triggers on the first scroll action
-    if (!window.adFlags.popUnder) {
-        window.adFlags.popUnder = true;
-        const script = document.createElement('script');
-        script.src = "//data527.click/394022a4415546a301de/1f8198af1c/?placementName=1";
-        document.body.appendChild(script);
-    }
-});
-
-// Time-based pop-up trigger (20 seconds after page load)
-setTimeout(() => {
-    const script = document.createElement('script');
-    script.src = "//data527.click/e31597fecb27d40d3e23/74f935d1cc/?placementName=1";
-    document.body.appendChild(script);
-}, 20000);
+    // تأخير عشوائي للتمويه (بين 2 إلى 4 ثوانٍ)
+    setTimeout(bypassLoad, 2000 + Math.random() * 2000);
+})();
 </script>
 
 </body>
