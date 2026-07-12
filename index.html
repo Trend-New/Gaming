@@ -8,166 +8,174 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-
-<!-- GTranslate Settings -->
 <style>
-  /* GTranslate styles */
-  .gtranslate_wrapper {
-    position: fixed;
-    top: 80px;
-    right: 20px;
-    z-index: 1000;
-    background: rgba(0,0,0,0.8);
-    padding: 8px 12px;
-    border-radius: 6px;
-    border: 1px solid #2c2d30;
+  :root{
+    --bg:#111213;
+    --panel:#1a1b1d;
+    --panel-2:#212224;
+    --line:#2c2d30;
+    --text:#f2f1ee;
+    --text-dim:#a3a3a1;
+    --red:#e6332a;
+    --red-dark:#b8241d;
+    --gold:#e8b84b;
   }
-  .gtranslate_wrapper select {
-    background: transparent;
-    color: #f2f1ee;
-    border: none;
-    padding: 4px 8px;
-    font-size: 14px;
-    font-family: 'Archivo', sans-serif;
-    cursor: pointer;
-    outline: none;
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Archivo',system-ui,sans-serif;
+    line-height:1.55;
   }
-  .gtranslate_wrapper select option {
-    background: #1a1b1d;
-    color: #f2f1ee;
+  a{color:inherit;}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 1.25rem;}
+  img{display:block;}
+
+  /* utility bar */
+  .utility{background:#000;font-size:.72rem;color:var(--text-dim);}
+  .utility .wrap{display:flex;justify-content:space-between;align-items:center;height:34px;}
+  .utility a{text-decoration:none;color:var(--text-dim);margin-left:1rem;transition:color .15s;}
+  .utility a:hover{color:var(--red);}
+
+  /* header */
+  header.main{background:var(--bg);border-bottom:3px solid var(--red);position:sticky;top:0;z-index:50;}
+  .header-row{display:flex;align-items:center;justify-content:space-between;height:64px;gap:1.5rem;}
+  .brand{font-family:'Archivo Black',sans-serif;font-size:1.5rem;letter-spacing:-.5px;white-space:nowrap;}
+  .brand span{color:var(--red);}
+  nav.primary{display:flex;gap:0;flex:1;}
+  nav.primary a{
+    text-decoration:none;color:var(--text);font-weight:700;font-size:.82rem;
+    text-transform:uppercase;letter-spacing:.4px;padding:0 .85rem;height:64px;
+    display:flex;align-items:center;border-bottom:3px solid transparent;transition:.15s;
   }
-  /* Pop-up overlay styles */
-  .popup-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.85);
-    z-index: 9999;
-    justify-content: center;
-    align-items: center;
+  nav.primary a:hover, nav.primary a.active{color:var(--red);border-bottom-color:var(--red);}
+  .header-actions{display:flex;align-items:center;gap:.75rem;}
+  .search-pill{display:flex;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:.4rem .7rem;}
+  .search-pill input{background:transparent;border:none;outline:none;color:var(--text);width:150px;font-size:.85rem;}
+  .search-pill i{color:var(--text-dim);font-size:.85rem;}
+  .btn-signup{background:var(--red);color:#fff;font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.4px;
+    padding:.55rem 1rem;border-radius:3px;text-decoration:none;white-space:nowrap;transition:background .15s;}
+  .btn-signup:hover{background:var(--red-dark);}
+
+  /* hero */
+  .hero{display:grid;grid-template-columns:2fr 1fr;gap:2px;margin:2px 0 2.5rem;background:var(--line);}
+  .hero-feature{position:relative;background:#000;min-height:440px;overflow:hidden;}
+  .hero-feature img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:.75;}
+  .hero-feature .overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.92) 0%,rgba(0,0,0,.35) 55%,transparent 100%);}
+  .hero-feature .txt{position:absolute;left:0;right:0;bottom:0;padding:2rem;}
+  .tag{display:inline-block;background:var(--red);color:#fff;font-size:.68rem;font-weight:700;text-transform:uppercase;
+    letter-spacing:.6px;padding:.25rem .6rem;border-radius:2px;margin-bottom:.7rem;}
+  .hero-feature h1{font-family:'Archivo Black',sans-serif;font-size:2.1rem;line-height:1.1;max-width:640px;}
+  .hero-feature p{color:var(--text-dim);margin-top:.6rem;max-width:560px;font-size:.95rem;}
+  .hero-list{display:flex;flex-direction:column;gap:2px;background:var(--line);}
+  .hero-list-item{background:var(--panel);display:flex;gap:.9rem;padding:.9rem;flex:1;text-decoration:none;transition:background .15s;}
+  .hero-list-item:hover{background:var(--panel-2);}
+  .hero-list-item img{width:96px;height:72px;object-fit:cover;border-radius:2px;flex-shrink:0;}
+  .hero-list-item .tag-sm{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--red);display:block;margin-bottom:.25rem;}
+  .hero-list-item h3{font-size:.88rem;font-weight:600;line-height:1.3;color:var(--text);}
+
+  /* section head */
+  .section-head{display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid var(--line);padding-bottom:.6rem;margin-bottom:1.4rem;}
+  .section-head h2{font-family:'Archivo Black',sans-serif;font-size:1.15rem;text-transform:uppercase;letter-spacing:.3px;
+    border-left:5px solid var(--red);padding-left:.6rem;}
+  .section-head a{font-size:.78rem;font-weight:700;text-transform:uppercase;color:var(--text-dim);text-decoration:none;letter-spacing:.4px;}
+  .section-head a:hover{color:var(--red);}
+  section.block{margin-bottom:3rem;}
+
+  /* filter chips */
+  .chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.75rem;}
+  .chip{background:var(--panel);border:1px solid var(--line);padding:.35rem 1rem;border-radius:20px;font-size:.78rem;font-weight:600;color:var(--text-dim);}
+  .chip.active{background:var(--red);border-color:var(--red);color:#fff;}
+
+  /* grids */
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;}
+  .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem;}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:3px;overflow:hidden;transition:transform .15s,border-color .15s;}
+  .card:hover{transform:translateY(-3px);border-color:var(--red);}
+  .card img{width:100%;height:170px;object-fit:cover;}
+  .card .body{padding:1rem 1.1rem 1.2rem;}
+  .platform{display:inline-block;font-size:.63rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;
+    color:var(--gold);margin-bottom:.4rem;}
+  .card h3{font-size:1rem;font-weight:700;line-height:1.35;margin-bottom:.5rem;}
+  .card h3 a{text-decoration:none;color:var(--text);}
+  .card h3 a:hover{color:var(--red);}
+  .card p{color:var(--text-dim);font-size:.85rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+  .meta{display:flex;gap:1rem;font-size:.72rem;color:var(--text-dim);margin-top:.8rem;padding-top:.7rem;border-top:1px solid var(--line);}
+  .score-badge{display:inline-flex;align-items:center;justify-content:center;background:var(--red);color:#fff;
+    font-family:'Archivo Black',sans-serif;font-size:1rem;width:42px;height:42px;border-radius:4px;flex-shrink:0;}
+
+  /* review cards */
+  .review-card{display:flex;gap:1rem;background:var(--panel);border:1px solid var(--line);border-radius:3px;overflow:hidden;}
+  .review-card img{width:200px;height:150px;object-fit:cover;flex-shrink:0;}
+  .review-card .body{padding:1rem 1.1rem 1rem 0;display:flex;flex-direction:column;}
+
+  /* countdown */
+  .countdown{background:#111213;border:1px solid var(--red-dark);border-radius:4px;
+    padding:2.2rem 1.5rem;text-align:center;margin-bottom:3rem;}
+  .countdown h2{font-family:'Archivo Black',sans-serif;font-size:1.7rem;text-transform:uppercase;color:#fff;}
+  .countdown h2 span{color:var(--red);}
+  .countdown p{color:#b3b3b3;margin-top:.3rem;font-size:.9rem;}
+  .countdown-grid{display:flex;justify-content:center;gap:1.6rem;margin-top:1.3rem;}
+  .countdown-grid .num{font-family:'Archivo Black',sans-serif;font-size:2.1rem;background:#000;border:1px solid #2c2c2c;
+    border-radius:4px;padding:.3rem .9rem;min-width:70px;display:inline-block;color:#fff;}
+  .countdown-grid .lbl{display:block;font-size:.65rem;text-transform:uppercase;letter-spacing:1px;color:#b3b3b3;margin-top:.35rem;}
+
+  /* newsletter */
+  .newsletter{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:2.2rem;text-align:center;margin-bottom:3rem;}
+  .newsletter h2{font-family:'Archivo Black',sans-serif;font-size:1.3rem;text-transform:uppercase;}
+  .newsletter p{color:var(--text-dim);margin:.4rem 0 1.2rem;font-size:.9rem;}
+  .newsletter form{display:flex;justify-content:center;gap:.6rem;flex-wrap:wrap;}
+  .newsletter input{background:#000;border:1px solid var(--line);border-radius:3px;padding:.65rem 1rem;color:var(--text);width:280px;font-size:.85rem;}
+  .newsletter button{background:var(--red);border:none;border-radius:3px;padding:.65rem 1.6rem;font-weight:700;
+    text-transform:uppercase;letter-spacing:.4px;color:#fff;cursor:pointer;font-size:.82rem;transition:background .15s;}
+  .newsletter button:hover{background:var(--red-dark);}
+
+  /* footer */
+  footer{border-top:3px solid var(--red);background:#000;padding:2.5rem 0 1.5rem;margin-top:1rem;color:#fff;}
+  .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2rem;margin-bottom:2rem;}
+  .footer-grid h4{font-size:.85rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:.7rem;color:#fff;}
+  .footer-grid ul{list-style:none;}
+  .footer-grid ul li{margin-bottom:.4rem;}
+  .footer-grid ul a{color:#b3b3b3;text-decoration:none;font-size:.85rem;transition:color .15s;}
+  .footer-grid ul a:hover{color:var(--red);}
+  .footer-social a{color:#b3b3b3;margin-right:.9rem;font-size:1.1rem;transition:color .15s;}
+  .footer-social a:hover{color:var(--red);}
+  .footer-bottom{border-top:1px solid #2c2c2c;padding-top:1.1rem;display:flex;justify-content:space-between;
+    font-size:.75rem;color:#b3b3b3;flex-wrap:wrap;gap:.5rem;}
+
+  @media (max-width:960px){
+    .hero{grid-template-columns:1fr;}
+    .grid-3{grid-template-columns:1fr 1fr;}
+    .grid-2{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+    nav.primary{display:none;}
   }
-  .popup-overlay.active {
+  @media (max-width:620px){
+    .grid-3{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr;}
+    .review-card{flex-direction:column;}
+    .review-card img{width:100%;height:180px;}
+    .header-row{flex-wrap:wrap;height:auto;padding:.7rem 0;}
+    .search-pill{display:none;}
+  }
+
+  /* Ad slot styling */
+  .ad-slot {
     display: flex;
+    justify-content: center;
+    margin: 25px auto;
+    min-height: 1050px;
+    width: 100%;
+    overflow: hidden;
   }
-  .popup-content {
-    background: #1a1b1d;
-    border: 2px solid #e6332a;
-    border-radius: 8px;
-    padding: 30px;
-    max-width: 400px;
-    width: 90%;
-    text-align: center;
-    position: relative;
-  }
-  .popup-content h2 {
-    color: #f2f1ee;
-    font-family: 'Archivo Black', sans-serif;
-    margin-bottom: 10px;
-  }
-  .popup-content p {
-    color: #a3a3a1;
-    margin-bottom: 20px;
-  }
-  .popup-close {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    color: #a3a3a1;
-    font-size: 24px;
-    cursor: pointer;
-    background: none;
-    border: none;
-  }
-  .popup-close:hover {
-    color: #e6332a;
-  }
-  .popup-btn {
-    background: #e6332a;
-    color: #fff;
-    border: none;
-    padding: 10px 30px;
-    border-radius: 4px;
-    font-weight: 700;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background 0.15s;
-  }
-  .popup-btn:hover {
-    background: #b8241d;
-  }
-  @media (max-width: 620px) {
-    .gtranslate_wrapper {
-      top: auto;
-      bottom: 10px;
-      right: 10px;
-    }
+  .ad-slot ins {
+    display: inline-block;
+    width: 300px;
+    height: 1050px;
   }
 </style>
-
-<!-- Pop-up Script -->
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Create pop-up overlay
-    const overlay = document.createElement('div');
-    overlay.className = 'popup-overlay';
-    overlay.innerHTML = `
-      <div class="popup-content">
-        <button class="popup-close">&times;</button>
-        <h2>🎮 Welcome to GameHub!</h2>
-        <p>Get the latest gaming news, reviews, and exclusive content delivered to your inbox.</p>
-        <button class="popup-btn" onclick="window.location.href='#'">Subscribe Now</button>
-      </div>
-    `;
-    document.body.appendChild(overlay);
-
-    // Show pop-up after 3 seconds
-    setTimeout(function() {
-      overlay.classList.add('active');
-    }, 3000);
-
-    // Close pop-up
-    overlay.querySelector('.popup-close').addEventListener('click', function() {
-      overlay.classList.remove('active');
-    });
-    overlay.addEventListener('click', function(e) {
-      if (e.target === overlay) {
-        overlay.classList.remove('active');
-      }
-    });
-  });
-</script>
-
-<!-- GTranslate Script -->
-<script>window.gtranslateSettings = {"default_language":"en","detect_browser_language":true,"wrapper_selector":".gtranslate_wrapper","flag_style":"3d","alt_flags":{"en":"usa"}}</script>
-<script src="https://cdn.gtranslate.net/widgets/latest/flags.js" defer></script>
-
 </head>
 <body>
-
-<!-- ==================== BANNER ADS (TOP OF BODY) ==================== -->
-<!-- Banner Ad 1 -->
-<ins style="width: 300px;height:1050px" data-width="300" data-height="1050" class="v372c6e8651" data-domain="//data527.click" data-affquery="/906aadc4ea1b78eac7bb/372c6e8651/?placementName=default"><script src="//data527.click/js/responsive.js" async></script></ins>
-
-<!-- Banner Ad 2 -->
-<ins style="width: 300px;height:1050px" data-width="300" data-height="1050" class="cca244ab96d" data-domain="//data527.click" data-affquery="/906aadc4ea1b78eac7bb/ca244ab96d/?placementName=2"><script src="//data527.click/js/responsive.js" async></script></ins>
-
-<!-- Banner Ad 3 -->
-<ins style="width: 300px;height:1050px" data-width="300" data-height="1050" class="td010d9fbd5" data-domain="//data527.click" data-affquery="/906aadc4ea1b78eac7bb/d010d9fbd5/?placementName=3"><script src="//data527.click/js/responsive.js" async></script></ins>
-
-<!-- Banner Ad 4 -->
-<ins style="width: 300px;height:1050px" data-width="300" data-height="1050" class="y747e2e1e73" data-domain="//data527.click" data-affquery="/906aadc4ea1b78eac7bb/747e2e1e73/?placementName=4"><script src="//data527.click/js/responsive.js" async></script></ins>
-
-<!-- Smartlink (Pop-under) -->
-<script type="text/javascript" src="//data527.click/394022a4415546a301de/1f8198af1c/?placementName=1"></script>
-
-<!-- Pop-up Link -->
-<script type="text/javascript" src="//data527.click/e31597fecb27d40d3e23/74f935d1cc/?placementName=1"></script>
-
-<!-- ==================== GTRANSLATE WIDGET ==================== -->
-<div class="gtranslate_wrapper"></div>
 
 <div class="utility">
   <div class="wrap">
@@ -203,6 +211,9 @@
 </header>
 
 <div class="wrap">
+
+  <!-- Ad Container 1 - Top of page -->
+  <div id="banner-container-1" class="ad-slot"></div>
 
   <section class="hero">
     <a href="#" class="hero-feature" style="text-decoration:none;color:inherit;">
@@ -283,6 +294,9 @@
     </div>
   </section>
 
+  <!-- Ad Container 2 - After latest news -->
+  <div id="banner-container-2" class="ad-slot"></div>
+
   <section class="block">
     <div class="section-head"><h2>Featured reviews</h2><a href="#">All reviews</a></div>
     <div class="grid-2">
@@ -313,6 +327,9 @@
     </div>
   </section>
 
+  <!-- Ad Container 3 - Before newsletter -->
+  <div id="banner-container-3" class="ad-slot"></div>
+
   <section class="newsletter">
     <h2>Get the latest gaming news</h2>
     <p>Subscribe to our newsletter for daily updates, reviews, and exclusive interviews.</p>
@@ -321,6 +338,9 @@
       <button type="submit">Subscribe</button>
     </form>
   </section>
+
+  <!-- Ad Container 4 - Bottom of page -->
+  <div id="banner-container-4" class="ad-slot"></div>
 
 </div>
 
@@ -378,6 +398,62 @@
   updateTimer();
   setInterval(updateTimer, 1000);
 })();
+
+// ============ AD SCRIPT (Robust Version) ============
+// Flagging system to prevent duplicate ads and ensure smooth loading
+window.adFlags = { b1: false, b2: false, b3: false, b4: false, popUnder: false };
+
+// Robust function to inject ads - properly handles script tags
+function injectAd(containerId, adHTML) {
+    const container = document.getElementById(containerId);
+    if (container) {
+        // Create a temporary div to parse the ad code
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = adHTML;
+        
+        // Move all elements (including the <script> tags) into the container
+        while (tempDiv.firstChild) {
+            container.appendChild(tempDiv.firstChild);
+        }
+    }
+}
+
+// Trigger the first banner immediately on page load
+injectAd('banner-container-1', '<ins style="display:inline-block;width:300px;height:1050px" class="v372c6e8651" data-domain="//data527.click" data-affquery="/906aadc4ea1b78eac7bb/372c6e8651/?placementName=default"><script src="//data527.click/js/responsive.js" async><\/script><\/ins>');
+
+// Trigger subsequent ads and pop-unders based on user scrolling
+window.addEventListener('scroll', () => {
+    const scroll = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
+
+    // Banners load based on scrolling progress
+    if (scroll > 0.25 && !window.adFlags.b2) {
+        window.adFlags.b2 = true;
+        injectAd('banner-container-2', '<ins style="display:inline-block;width:300px;height:1050px" class="cca244ab96d" data-domain="//data527.click" data-affquery="/906aadc4ea1b78eac7bb/ca244ab96d/?placementName=2"><script src="//data527.click/js/responsive.js" async><\/script><\/ins>');
+    }
+    if (scroll > 0.50 && !window.adFlags.b3) {
+        window.adFlags.b3 = true;
+        injectAd('banner-container-3', '<ins style="display:inline-block;width:300px;height:1050px" class="td010d9fbd5" data-domain="//data527.click" data-affquery="/906aadc4ea1b78eac7bb/d010d9fbd5/?placementName=3"><script src="//data527.click/js/responsive.js" async><\/script><\/ins>');
+    }
+    if (scroll > 0.75 && !window.adFlags.b4) {
+        window.adFlags.b4 = true;
+        injectAd('banner-container-4', '<ins style="display:inline-block;width:300px;height:1050px" class="y747e2e1e73" data-domain="//data527.click" data-affquery="/906aadc4ea1b78eac7bb/747e2e1e73/?placementName=4"><script src="//data527.click/js/responsive.js" async><\/script><\/ins>');
+    }
+
+    // Pop-under triggers on the first scroll action
+    if (!window.adFlags.popUnder) {
+        window.adFlags.popUnder = true;
+        const script = document.createElement('script');
+        script.src = "//data527.click/394022a4415546a301de/1f8198af1c/?placementName=1";
+        document.body.appendChild(script);
+    }
+});
+
+// Time-based pop-up trigger (20 seconds after page load)
+setTimeout(() => {
+    const script = document.createElement('script');
+    script.src = "//data527.click/e31597fecb27d40d3e23/74f935d1cc/?placementName=1";
+    document.body.appendChild(script);
+}, 20000);
 </script>
 
 </body>
