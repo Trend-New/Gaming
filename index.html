@@ -4,12 +4,73 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GameHub · Gaming News & Reviews</title>
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
+  <!-- ===== MONETIZATION ENGINE: GTranslate & Pop-up Styles ===== -->
   <style>
+    /* GTranslate settings (placeholder) */
+    .gtranslate_wrapper { display: none; } /* hidden, but kept for integration */
+
+    /* Pop-up modal style (for 30s pop-up) */
+    .popup-modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+    }
+    .popup-modal.active { display: flex; }
+    .popup-content {
+      background: #1a1b1d;
+      border: 1px solid #e6332a;
+      max-width: 420px;
+      width: 90%;
+      padding: 2rem 1.5rem;
+      border-radius: 8px;
+      text-align: center;
+      color: #f2f1ee;
+      position: relative;
+    }
+    .popup-content h2 { font-family: 'Archivo Black', sans-serif; color: #e6332a; margin-bottom: 0.5rem; }
+    .popup-content p { color: #a3a3a1; margin-bottom: 1.2rem; }
+    .popup-close {
+      background: #e6332a;
+      border: none;
+      color: #fff;
+      padding: 0.5rem 1.5rem;
+      border-radius: 4px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .popup-close:hover { background: #b8241d; }
+
+    /* Ad placeholders – CLS prevention & styling */
+    .ad-placeholder {
+      min-height: 90px;
+      background: #1a1b1d;
+      border: 1px dashed #2c2d30;
+      margin: 16px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #a3a3a1;
+      font-size: 0.85rem;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+    .ad-placeholder:hover { background: #212224; }
+    /* specific banner sizes */
+    #banner-1 { min-height: 120px; }
+    #banner-2, #banner-3, #banner-4 { min-height: 100px; }
+
+    /* existing styles */
     :root{
       --bg:#111213;
       --panel:#1a1b1d;
@@ -22,33 +83,47 @@
       --gold:#e8b84b;
     }
     *{margin:0;padding:0;box-sizing:border-box;}
-    body{background:var(--bg);color:var(--text);font-family:'Archivo',system-ui,sans-serif;line-height:1.55;}
+    body{
+      background:var(--bg);
+      color:var(--text);
+      font-family:'Archivo',system-ui,sans-serif;
+      line-height:1.55;
+    }
     a{color:inherit;}
     .wrap{max-width:1240px;margin:0 auto;padding:0 1.25rem;}
     img{display:block;}
+
     .utility{background:#000;font-size:.72rem;color:var(--text-dim);}
     .utility .wrap{display:flex;justify-content:space-between;align-items:center;height:34px;}
     .utility a{text-decoration:none;color:var(--text-dim);margin-left:1rem;transition:color .15s;}
     .utility a:hover{color:var(--red);}
+
     header.main{background:var(--bg);border-bottom:3px solid var(--red);position:sticky;top:0;z-index:50;}
     .header-row{display:flex;align-items:center;justify-content:space-between;height:64px;gap:1.5rem;}
     .brand{font-family:'Archivo Black',sans-serif;font-size:1.5rem;letter-spacing:-.5px;white-space:nowrap;}
     .brand span{color:var(--red);}
     nav.primary{display:flex;gap:0;flex:1;}
-    nav.primary a{text-decoration:none;color:var(--text);font-weight:700;font-size:.82rem;text-transform:uppercase;letter-spacing:.4px;padding:0 .85rem;height:64px;display:flex;align-items:center;border-bottom:3px solid transparent;transition:.15s;}
+    nav.primary a{
+      text-decoration:none;color:var(--text);font-weight:700;font-size:.82rem;
+      text-transform:uppercase;letter-spacing:.4px;padding:0 .85rem;height:64px;
+      display:flex;align-items:center;border-bottom:3px solid transparent;transition:.15s;
+    }
     nav.primary a:hover, nav.primary a.active{color:var(--red);border-bottom-color:var(--red);}
     .header-actions{display:flex;align-items:center;gap:.75rem;}
     .search-pill{display:flex;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:.4rem .7rem;}
     .search-pill input{background:transparent;border:none;outline:none;color:var(--text);width:150px;font-size:.85rem;}
     .search-pill i{color:var(--text-dim);font-size:.85rem;}
-    .btn-signup{background:var(--red);color:#fff;font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.4px;padding:.55rem 1rem;border-radius:3px;text-decoration:none;white-space:nowrap;transition:background .15s;}
+    .btn-signup{background:var(--red);color:#fff;font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.4px;
+      padding:.55rem 1rem;border-radius:3px;text-decoration:none;white-space:nowrap;transition:background .15s;}
     .btn-signup:hover{background:var(--red-dark);}
+
     .hero{display:grid;grid-template-columns:2fr 1fr;gap:2px;margin:2px 0 2.5rem;background:var(--line);}
     .hero-feature{position:relative;background:#000;min-height:440px;overflow:hidden;}
     .hero-feature img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:.75;}
     .hero-feature .overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.92) 0%,rgba(0,0,0,.35) 55%,transparent 100%);}
     .hero-feature .txt{position:absolute;left:0;right:0;bottom:0;padding:2rem;}
-    .tag{display:inline-block;background:var(--red);color:#fff;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;padding:.25rem .6rem;border-radius:2px;margin-bottom:.7rem;}
+    .tag{display:inline-block;background:var(--red);color:#fff;font-size:.68rem;font-weight:700;text-transform:uppercase;
+      letter-spacing:.6px;padding:.25rem .6rem;border-radius:2px;margin-bottom:.7rem;}
     .hero-feature h1{font-family:'Archivo Black',sans-serif;font-size:2.1rem;line-height:1.1;max-width:640px;}
     .hero-feature p{color:var(--text-dim);margin-top:.6rem;max-width:560px;font-size:.95rem;}
     .hero-list{display:flex;flex-direction:column;gap:2px;background:var(--line);}
@@ -57,44 +132,57 @@
     .hero-list-item img{width:96px;height:72px;object-fit:cover;border-radius:2px;flex-shrink:0;}
     .hero-list-item .tag-sm{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--red);display:block;margin-bottom:.25rem;}
     .hero-list-item h3{font-size:.88rem;font-weight:600;line-height:1.3;color:var(--text);}
+
     .section-head{display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid var(--line);padding-bottom:.6rem;margin-bottom:1.4rem;}
-    .section-head h2{font-family:'Archivo Black',sans-serif;font-size:1.15rem;text-transform:uppercase;letter-spacing:.3px;border-left:5px solid var(--red);padding-left:.6rem;}
+    .section-head h2{font-family:'Archivo Black',sans-serif;font-size:1.15rem;text-transform:uppercase;letter-spacing:.3px;
+      border-left:5px solid var(--red);padding-left:.6rem;}
     .section-head a{font-size:.78rem;font-weight:700;text-transform:uppercase;color:var(--text-dim);text-decoration:none;letter-spacing:.4px;}
     .section-head a:hover{color:var(--red);}
     section.block{margin-bottom:3rem;}
+
     .chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.75rem;}
     .chip{background:var(--panel);border:1px solid var(--line);padding:.35rem 1rem;border-radius:20px;font-size:.78rem;font-weight:600;color:var(--text-dim);}
     .chip.active{background:var(--red);border-color:var(--red);color:#fff;}
+
     .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;}
     .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem;}
     .card{background:var(--panel);border:1px solid var(--line);border-radius:3px;overflow:hidden;transition:transform .15s,border-color .15s;}
     .card:hover{transform:translateY(-3px);border-color:var(--red);}
     .card img{width:100%;height:170px;object-fit:cover;}
     .card .body{padding:1rem 1.1rem 1.2rem;}
-    .platform{display:inline-block;font-size:.63rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--gold);margin-bottom:.4rem;}
+    .platform{display:inline-block;font-size:.63rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;
+      color:var(--gold);margin-bottom:.4rem;}
     .card h3{font-size:1rem;font-weight:700;line-height:1.35;margin-bottom:.5rem;}
     .card h3 a{text-decoration:none;color:var(--text);}
     .card h3 a:hover{color:var(--red);}
     .card p{color:var(--text-dim);font-size:.85rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
     .meta{display:flex;gap:1rem;font-size:.72rem;color:var(--text-dim);margin-top:.8rem;padding-top:.7rem;border-top:1px solid var(--line);}
-    .score-badge{display:inline-flex;align-items:center;justify-content:center;background:var(--red);color:#fff;font-family:'Archivo Black',sans-serif;font-size:1rem;width:42px;height:42px;border-radius:4px;flex-shrink:0;}
+    .score-badge{display:inline-flex;align-items:center;justify-content:center;background:var(--red);color:#fff;
+      font-family:'Archivo Black',sans-serif;font-size:1rem;width:42px;height:42px;border-radius:4px;flex-shrink:0;}
+
     .review-card{display:flex;gap:1rem;background:var(--panel);border:1px solid var(--line);border-radius:3px;overflow:hidden;}
     .review-card img{width:200px;height:150px;object-fit:cover;flex-shrink:0;}
     .review-card .body{padding:1rem 1.1rem 1rem 0;display:flex;flex-direction:column;}
-    .countdown{background:#111213;border:1px solid var(--red-dark);border-radius:4px;padding:2.2rem 1.5rem;text-align:center;margin-bottom:3rem;}
+
+    .countdown{background:#111213;border:1px solid var(--red-dark);border-radius:4px;
+      padding:2.2rem 1.5rem;text-align:center;margin-bottom:3rem;}
     .countdown h2{font-family:'Archivo Black',sans-serif;font-size:1.7rem;text-transform:uppercase;color:#fff;}
     .countdown h2 span{color:var(--red);}
     .countdown p{color:#b3b3b3;margin-top:.3rem;font-size:.9rem;}
     .countdown-grid{display:flex;justify-content:center;gap:1.6rem;margin-top:1.3rem;}
-    .countdown-grid .num{font-family:'Archivo Black',sans-serif;font-size:2.1rem;background:#000;border:1px solid #2c2c2c;border-radius:4px;padding:.3rem .9rem;min-width:70px;display:inline-block;color:#fff;}
+    .countdown-grid .num{font-family:'Archivo Black',sans-serif;font-size:2.1rem;background:#000;border:1px solid #2c2c2c;
+      border-radius:4px;padding:.3rem .9rem;min-width:70px;display:inline-block;color:#fff;}
     .countdown-grid .lbl{display:block;font-size:.65rem;text-transform:uppercase;letter-spacing:1px;color:#b3b3b3;margin-top:.35rem;}
+
     .newsletter{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:2.2rem;text-align:center;margin-bottom:3rem;}
     .newsletter h2{font-family:'Archivo Black',sans-serif;font-size:1.3rem;text-transform:uppercase;}
     .newsletter p{color:var(--text-dim);margin:.4rem 0 1.2rem;font-size:.9rem;}
     .newsletter form{display:flex;justify-content:center;gap:.6rem;flex-wrap:wrap;}
     .newsletter input{background:#000;border:1px solid var(--line);border-radius:3px;padding:.65rem 1rem;color:var(--text);width:280px;font-size:.85rem;}
-    .newsletter button{background:var(--red);border:none;border-radius:3px;padding:.65rem 1.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#fff;cursor:pointer;font-size:.82rem;transition:background .15s;}
+    .newsletter button{background:var(--red);border:none;border-radius:3px;padding:.65rem 1.6rem;font-weight:700;
+      text-transform:uppercase;letter-spacing:.4px;color:#fff;cursor:pointer;font-size:.82rem;transition:background .15s;}
     .newsletter button:hover{background:var(--red-dark);}
+
     footer{border-top:3px solid var(--red);background:#000;padding:2.5rem 0 1.5rem;margin-top:1rem;color:#fff;}
     .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2rem;margin-bottom:2rem;}
     .footer-grid h4{font-size:.85rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:.7rem;color:#fff;}
@@ -104,17 +192,41 @@
     .footer-grid ul a:hover{color:var(--red);}
     .footer-social a{color:#b3b3b3;margin-right:.9rem;font-size:1.1rem;transition:color .15s;}
     .footer-social a:hover{color:var(--red);}
-    .footer-bottom{border-top:1px solid #2c2c2c;padding-top:1.1rem;display:flex;justify-content:space-between;font-size:.75rem;color:#b3b3b3;flex-wrap:wrap;gap:.5rem;}
-    @media (max-width:960px){.hero{grid-template-columns:1fr;}.grid-3{grid-template-columns:1fr 1fr;}.grid-2{grid-template-columns:1fr;}.footer-grid{grid-template-columns:1fr 1fr;}nav.primary{display:none;}}
-    @media (max-width:620px){.grid-3{grid-template-columns:1fr;}.footer-grid{grid-template-columns:1fr;}.review-card{flex-direction:column;}.review-card img{width:100%;height:180px;}.header-row{flex-wrap:wrap;height:auto;padding:.7rem 0;}.search-pill{display:none;}}
-    .banner-top{background:#0a0a0b;text-align:center;padding:0.75rem 0.5rem;border-bottom:1px solid var(--line);margin-bottom:0.5rem;}
-    .banner-top ins{display:inline-block;}
+    .footer-bottom{border-top:1px solid #2c2c2c;padding-top:1.1rem;display:flex;justify-content:space-between;
+      font-size:.75rem;color:#b3b3b3;flex-wrap:wrap;gap:.5rem;}
+
+    @media (max-width:960px){
+      .hero{grid-template-columns:1fr;}
+      .grid-3{grid-template-columns:1fr 1fr;}
+      .grid-2{grid-template-columns:1fr;}
+      .footer-grid{grid-template-columns:1fr 1fr;}
+      nav.primary{display:none;}
+    }
+    @media (max-width:620px){
+      .grid-3{grid-template-columns:1fr;}
+      .footer-grid{grid-template-columns:1fr;}
+      .review-card{flex-direction:column;}
+      .review-card img{width:100%;height:180px;}
+      .header-row{flex-wrap:wrap;height:auto;padding:.7rem 0;}
+      .search-pill{display:none;}
+    }
   </style>
 </head>
 <body>
 
-<div id="banner-slot-1" class="banner-top"></div>
+<!-- ===== MONETIZATION: BANNER AD DIV (top of body) ===== -->
+<div id="banner-1" class="ad-placeholder" style="margin: 8px auto; max-width:1240px;">Banner 1 · Load</div>
 
+<!-- ===== POP-UP MODAL (30s) ===== -->
+<div id="popupModal" class="popup-modal">
+  <div class="popup-content">
+    <h2>🎮 Stay tuned!</h2>
+    <p>Get exclusive gaming news, reviews and insider updates.</p>
+    <button class="popup-close" id="closePopup">Close</button>
+  </div>
+</div>
+
+<!-- ===== ORIGINAL WEBSITE CONTENT ===== -->
 <div class="utility">
   <div class="wrap">
     <span><i class="fas fa-gamepad"></i>&nbsp; GameHub · since 2024</span>
@@ -176,6 +288,9 @@
     </div>
   </section>
 
+  <!-- scroll banner 2 placeholder (25%) -->
+  <div id="banner-2" class="ad-placeholder" style="margin: 16px 0;">Banner 2 · 25% scroll</div>
+
   <section class="countdown">
     <h2>GTA 6 <span>countdown</span></h2>
     <p>The most anticipated release of the year</p>
@@ -229,9 +344,8 @@
     </div>
   </section>
 
-  <div id="banner-slot-2" style="margin: 2rem 0; text-align:center; min-height:50px;"></div>
-  <div id="banner-slot-3" style="margin: 2rem 0; text-align:center; min-height:50px;"></div>
-  <div id="banner-slot-4" style="margin: 2rem 0; text-align:center; min-height:50px;"></div>
+  <!-- scroll banner 3 placeholder (50%) -->
+  <div id="banner-3" class="ad-placeholder" style="margin: 16px 0;">Banner 3 · 50% scroll</div>
 
   <section class="block">
     <div class="section-head"><h2>Featured reviews</h2><a href="#">All reviews</a></div>
@@ -262,6 +376,9 @@
       </article>
     </div>
   </section>
+
+  <!-- scroll banner 4 placeholder (75%) -->
+  <div id="banner-4" class="ad-placeholder" style="margin: 16px 0;">Banner 4 · 75% scroll</div>
 
   <section class="newsletter">
     <h2>Get the latest gaming news</h2>
@@ -306,187 +423,89 @@
   </div>
 </footer>
 
+<!-- ===== MONETIZATION ENGINE SCRIPT ===== -->
 <script>
-(function(){
-  const targetDate = new Date('2026-12-31T00:00:00').getTime();
-  const daysEl = document.getElementById('days');
-  const hoursEl = document.getElementById('hours');
-  const minutesEl = document.getElementById('minutes');
-  const secondsEl = document.getElementById('seconds');
-  function updateTimer(){
-    const now = new Date().getTime();
-    const distance = targetDate - now;
-    if (distance > 0){
-      daysEl.textContent = String(Math.floor(distance/(1000*60*60*24))).padStart(2,'0');
-      hoursEl.textContent = String(Math.floor((distance%(1000*60*60*24))/(1000*60*60))).padStart(2,'0');
-      minutesEl.textContent = String(Math.floor((distance%(1000*60*60))/(1000*60))).padStart(2,'0');
-      secondsEl.textContent = String(Math.floor((distance%(1000*60))/1000)).padStart(2,'0');
-    } else {
-      daysEl.textContent = hoursEl.textContent = minutesEl.textContent = secondsEl.textContent = '00';
+  (function() {
+    // 1. Banner Ad 1 - On Load (already placed in HTML, but we keep the console)
+    window.addEventListener('load', function() {
+      console.log("Loading Banner 1...");
+      // document.getElementById('banner-1').innerHTML = "<script src='YOUR_AD_TAG_1'><\/script>";
+    });
+
+    // 2-4. Banner Ads - Scroll Triggers
+    window.addEventListener('scroll', function() {
+      const scrollPercent = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
+      if (scrollPercent > 0.25 && !window.ad2Loaded) {
+        window.ad2Loaded = true;
+        console.log("Loading Banner 2...");
+        // document.getElementById('banner-2').innerHTML = "<script src='YOUR_AD_TAG_2'><\/script>";
+      }
+      if (scrollPercent > 0.50 && !window.ad3Loaded) {
+        window.ad3Loaded = true;
+        console.log("Loading Banner 3...");
+        // document.getElementById('banner-3').innerHTML = "<script src='YOUR_AD_TAG_3'><\/script>";
+      }
+      if (scrollPercent > 0.75 && !window.ad4Loaded) {
+        window.ad4Loaded = true;
+        console.log("Loading Banner 4...");
+        // document.getElementById('banner-4').innerHTML = "<script src='YOUR_AD_TAG_4'><\/script>";
+      }
+    });
+
+    // 5. Pop-under - First Click Interaction
+    const triggerPopUnder = function() {
+      console.log("Pop-under triggered!");
+      window.removeEventListener('click', triggerPopUnder);
+      // window.open('YOUR_POP_UNDER_URL');
+    };
+    window.addEventListener('click', triggerPopUnder, { once: true });
+
+    // 6. Smart Link - Exit Intent
+    document.addEventListener('mouseleave', function(e) {
+      if (!window.exitIntentShown) {
+        window.exitIntentShown = true;
+        console.log("Exit Intent: Smart Link triggered");
+        // window.location.href = 'YOUR_SMART_LINK';
+      }
+    });
+
+    // 7. Pop-up - Time Delayed (30 seconds)
+    setTimeout(function() {
+      console.log("Showing 30s Pop-up");
+      const modal = document.getElementById('popupModal');
+      if (modal) modal.classList.add('active');
+    }, 30000);
+
+    // Close pop-up
+    document.getElementById('closePopup')?.addEventListener('click', function() {
+      document.getElementById('popupModal').classList.remove('active');
+    });
+    // click outside to close
+    document.getElementById('popupModal')?.addEventListener('click', function(e) {
+      if (e.target === this) this.classList.remove('active');
+    });
+
+    // Countdown timer (original)
+    const targetDate = new Date('2025-12-31T00:00:00').getTime();
+    const daysEl = document.getElementById('days');
+    const hoursEl = document.getElementById('hours');
+    const minutesEl = document.getElementById('minutes');
+    const secondsEl = document.getElementById('seconds');
+    function updateTimer(){
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+      if (distance > 0){
+        daysEl.textContent = String(Math.floor(distance/(1000*60*60*24))).padStart(2,'0');
+        hoursEl.textContent = String(Math.floor((distance%(1000*60*60*24))/(1000*60*60))).padStart(2,'0');
+        minutesEl.textContent = String(Math.floor((distance%(1000*60*60))/(1000*60))).padStart(2,'0');
+        secondsEl.textContent = String(Math.floor((distance%(1000*60))/1000)).padStart(2,'0');
+      } else {
+        daysEl.textContent = hoursEl.textContent = minutesEl.textContent = secondsEl.textContent = '00';
+      }
     }
-  }
-  updateTimer();
-  setInterval(updateTimer, 1000);
-})();
+    updateTimer();
+    setInterval(updateTimer, 1000);
+  })();
 </script>
-
-<!-- ==========================================================
-     MONETIZATION ENGINE — placed at very bottom of body
-     ========================================================== -->
-<script>
-(function () {
-  "use strict";
-
-  const CONFIG = {
-    minGapBetweenPops: 10000,
-    scrollBannerThreshold: 0.25,
-    popupScrollThreshold: 0.60,
-  };
-
-  let lastPopTimestamp = 0;
-  let responsiveJsLoaded = false; // ensures the shared loader script is only injected once
-
-  function canShowPop() {
-    const now = Date.now();
-    if (now - lastPopTimestamp >= CONFIG.minGapBetweenPops) {
-      lastPopTimestamp = now;
-      return true;
-    }
-    return false;
-  }
-
-  function injectScriptTag(src) {
-    const s = document.createElement("script");
-    s.type = "text/javascript";
-    s.src = src;
-    s.async = true;
-    document.body.appendChild(s);
-  }
-
-  function ensureResponsiveLoaderLoaded() {
-    if (responsiveJsLoaded) return;
-    responsiveJsLoaded = true;
-    const s = document.createElement("script");
-    s.src = "//data527.click/js/responsive.js";
-    s.async = true;
-    document.body.appendChild(s);
-  }
-
-  function injectBannerAd(containerId, insHTML) {
-    const container = document.getElementById(containerId);
-    if (!container) {
-      console.warn("Missing container:", containerId);
-      return;
-    }
-    container.innerHTML = insHTML;
-    ensureResponsiveLoaderLoaded();
-  }
-
-  const BANNER_1_HTML =
-    '<ins style="width: 300px;height:1050px" data-width="300" data-height="1050" ' +
-    'class="v372c6e8651" data-domain="//data527.click" ' +
-    'data-affquery="/906aadc4ea1b78eac7bb/372c6e8651/?placementName=default"></ins>';
-
-  const BANNER_2_HTML =
-    '<ins style="width: 300px;height:1050px" data-width="300" data-height="1050" ' +
-    'class="cca244ab96d" data-domain="//data527.click" ' +
-    'data-affquery="/906aadc4ea1b78eac7bb/ca244ab96d/?placementName=2"></ins>';
-
-  const BANNER_3_HTML =
-    '<ins style="width: 300px;height:1050px" data-width="300" data-height="1050" ' +
-    'class="td010d9fbd5" data-domain="//data527.click" ' +
-    'data-affquery="/906aadc4ea1b78eac7bb/d010d9fbd5/?placementName=3"></ins>';
-
-  const BANNER_4_HTML =
-    '<ins style="width: 300px;height:1050px" data-width="300" data-height="1050" ' +
-    'class="y747e2e1e73" data-domain="//data527.click" ' +
-    'data-affquery="/906aadc4ea1b78eac7bb/747e2e1e73/?placementName=4"></ins>';
-
-  const SMARTLINK_POPUNDER_SRC =
-    "//data527.click/394022a4415546a301de/1f8198af1c/?placementName=1";
-
-  const POPUP_SRC =
-    "//data527.click/e31597fecb27d40d3e23/74f935d1cc/?placementName=1";
-
-  function loadFirstBanner() {
-    injectBannerAd("banner-slot-1", BANNER_1_HTML);
-    console.log("Banner #1 loaded on page load");
-  }
-
-  const scrollBanners = [
-    function () {
-      injectBannerAd("banner-slot-2", BANNER_2_HTML);
-      console.log("Banner #2 triggered by scroll");
-    },
-    function () {
-      injectBannerAd("banner-slot-3", BANNER_3_HTML);
-      console.log("Banner #3 triggered by scroll");
-    },
-    function () {
-      injectBannerAd("banner-slot-4", BANNER_4_HTML);
-      console.log("Banner #4 triggered by scroll");
-    },
-  ];
-
-  function initScrollBanners() {
-    let triggeredCount = 0;
-    window.addEventListener("scroll", function () {
-      if (triggeredCount >= scrollBanners.length) return;
-
-      const scrollPercent =
-        window.scrollY / (document.body.scrollHeight - window.innerHeight);
-
-      const nextThreshold =
-        CONFIG.scrollBannerThreshold * (triggeredCount + 1);
-
-      if (scrollPercent >= nextThreshold) {
-        scrollBanners[triggeredCount]();
-        triggeredCount++;
-      }
-    });
-  }
-
-  function initPopUnder() {
-    let fired = false;
-    document.addEventListener("click", function () {
-      if (fired || !canShowPop()) return;
-      fired = true;
-
-      injectScriptTag(SMARTLINK_POPUNDER_SRC);
-      console.log("Smartlink/Pop under triggered on first click");
-    });
-  }
-
-  function initScrollTriggeredPopup() {
-    let fired = false;
-    let pending = false;
-
-    window.addEventListener("scroll", function () {
-      if (fired) return;
-
-      const scrollPercent =
-        window.scrollY / (document.body.scrollHeight - window.innerHeight);
-
-      if (scrollPercent >= CONFIG.popupScrollThreshold) {
-        pending = true;
-      }
-
-      if (pending && canShowPop()) {
-        fired = true;
-        injectScriptTag(POPUP_SRC);
-        console.log("Pop up triggered by scroll (60% of page)");
-      }
-    });
-  }
-
-  document.addEventListener("DOMContentLoaded", function () {
-    loadFirstBanner();
-    initScrollBanners();
-    initPopUnder();
-    initScrollTriggeredPopup();
-  });
-})();
-</script>
-
 </body>
 </html>
