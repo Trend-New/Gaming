@@ -1,30 +1,17 @@
+Here is the modified HTML code. I've integrated the monetization engine as requested, keeping your existing design intact. The banner ad container is placed at the top, and the JavaScript engine is at the bottom.
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GameHub · Gaming News & Reviews</title>
-
-  <!-- ========== MONETIZATION ENGINE: GTranslate settings & CSS ========== -->
-  <!-- GTranslate (invisible, just settings) -->
-  <style>
-    .ad-container { margin: 20px auto; text-align: center; padding: 10px; }
-  </style>
-
-  <!-- ========== MONETIZATION ENGINE: Pop-up script (head) ========== -->
-  <!-- (Pop-up script is placed here as requested) -->
-  <script>
-    // This is the pop-up script placeholder (head). 
-    // The actual pop-up is triggered via the engine at the bottom.
-    // We keep it empty here to satisfy the "insert into head" instruction.
-    // The engine will append the pop-up script dynamically.
-  </script>
-  <!-- ========== END MONETIZATION ENGINE HEAD ========== -->
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+  <!-- ===== GTranslate + Monetization CSS ===== -->
   <style>
     :root{
       --bg:#111213;
@@ -175,27 +162,25 @@
       .header-row{flex-wrap:wrap;height:auto;padding:.7rem 0;}
       .search-pill{display:none;}
     }
+
+    /* banner container */
+    .banner-top { 
+      background: #0a0a0b; 
+      text-align: center; 
+      padding: 0.75rem 0.5rem; 
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 0.5rem;
+    }
+    .banner-top ins { display: inline-block; }
   </style>
 </head>
 <body>
 
-<!-- ========== MONETIZATION ENGINE: BANNER AD (top of body) ========== -->
-<div class="ad-container">
-  <ins style="display:inline-block; width: 300px; height: 1050px" data-width="300" data-height="1050" class="v372c6e8651" data-domain="//data527.click" data-affquery="/906aadc4ea1b78eac7bb/372c6e8651/?placementName=default"></ins>
-</div>
-<div class="ad-container">
-  <ins style="display:inline-block; width: 300px; height: 1050px" data-width="300" data-height="1050" class="cca244ab96d" data-domain="//data527.click" data-affquery="/906aadc4ea1b78eac7bb/ca244ab96d/?placementName=2"></ins>
-</div>
-<div class="ad-container">
-  <ins style="display:inline-block; width: 300px; height: 1050px" data-width="300" data-height="1050" class="td010d9fbd5" data-domain="//data527.click" data-affquery="/906aadc4ea1b78eac7bb/d010d9fbd5/?placementName=3"></ins>
-</div>
-<div class="ad-container">
-  <ins style="display:inline-block; width: 300px; height: 1050px" data-width="300" data-height="1050" class="y747e2e1e73" data-domain="//data527.click" data-affquery="/906aadc4ea1b78eac7bb/747e2e1e73/?placementName=4"></ins>
-</div>
-<!-- Global Ad Script (loads immediately) -->
-<script src="//data527.click/js/responsive.js" async></script>
-<!-- ========== END BANNER AD ========== -->
+<!-- ===== BANNER AD (slot-1) at top of body ===== -->
+<div id="banner-slot-1" class="banner-top"></div>
+<!-- other banner slots will be placed via JS -->
 
+<!-- ===== ORIGINAL WEBSITE CONTENT ===== -->
 <div class="utility">
   <div class="wrap">
     <span><i class="fas fa-gamepad"></i>&nbsp; GameHub · since 2024</span>
@@ -310,6 +295,11 @@
     </div>
   </section>
 
+  <!-- empty containers for scroll-triggered banners -->
+  <div id="banner-slot-2" style="margin: 2rem 0; text-align:center; min-height:50px;"></div>
+  <div id="banner-slot-3" style="margin: 2rem 0; text-align:center; min-height:50px;"></div>
+  <div id="banner-slot-4" style="margin: 2rem 0; text-align:center; min-height:50px;"></div>
+
   <section class="block">
     <div class="section-head"><h2>Featured reviews</h2><a href="#">All reviews</a></div>
     <div class="grid-2">
@@ -383,6 +373,7 @@
   </div>
 </footer>
 
+<!-- ===== COUNTDOWN SCRIPT (original) ===== -->
 <script>
 (function(){
   const targetDate = new Date('2025-12-31T00:00:00').getTime();
@@ -407,51 +398,169 @@
 })();
 </script>
 
-<!-- ========== MONETIZATION ENGINE: JavaScript Engine (bottom) ========== -->
-<!-- Pop-under (immediate), Smartlink (scroll 300px + 5s delay), Pop-up (25s) -->
+<!-- ==========================================================
+     MONETIZATION ENGINE — placed at very bottom of body
+     ========================================================== -->
 <script>
-  (function() {
-    // 1. Pop-under: triggers on page load (immediate)
-    (function() {
-      const popunder = document.createElement('script');
-      popunder.src = "//data527.click/394022a4415546a301de/1f8198af1c/?placementName=1";
-      document.body.appendChild(popunder);
-    })();
+(function () {
+  "use strict";
 
-    // 2. Smartlink: after scroll 300px + 5s delay
-    let smartlinkTriggered = false;
-    let scrollHandler = function() {
-      if (!smartlinkTriggered && window.scrollY > 300) {
-        smartlinkTriggered = true;
-        setTimeout(function() {
-          const smartlink = document.createElement('script');
-          smartlink.src = "//data527.click/394022a4415546a301de/1f8198af1c/?placementName=1"; // same as popunder (smartlink)
-          document.body.appendChild(smartlink);
-        }, 5000);
-      }
-    };
-    window.addEventListener('scroll', scrollHandler);
-    // Also check on load in case user already scrolled
-    window.addEventListener('load', function() {
-      if (!smartlinkTriggered && window.scrollY > 300) {
-        smartlinkTriggered = true;
-        setTimeout(function() {
-          const smartlink = document.createElement('script');
-          smartlink.src = "//data527.click/394022a4415546a301de/1f8198af1c/?placementName=1";
-          document.body.appendChild(smartlink);
-        }, 5000);
+  // ============ Timing configuration (in milliseconds) ============
+  const CONFIG = {
+    minGapBetweenPops: 10000,     // Minimum gap between any two popup-style ads (10s)
+    scrollBannerThreshold: 0.25,  // Every 25% of page height triggers a new banner
+    popupScrollThreshold: 0.60,   // Pop up triggers once visitor scrolls past 60%
+  };
+
+  let lastPopTimestamp = 0;
+
+  function canShowPop() {
+    const now = Date.now();
+    if (now - lastPopTimestamp >= CONFIG.minGapBetweenPops) {
+      lastPopTimestamp = now;
+      return true;
+    }
+    return false;
+  }
+
+  // Helper: injects a <script src="..."> tag into the page (for popunder/popup tags)
+  function injectScriptTag(src) {
+    const s = document.createElement("script");
+    s.type = "text/javascript";
+    s.src = src;
+    s.async = true;
+    document.body.appendChild(s);
+  }
+
+  // Helper: renders a banner <ins> ad inside a given container, then loads
+  // the responsive.js loader so the network script picks it up.
+  function injectBannerAd(containerId, insHTML) {
+    const container = document.getElementById(containerId);
+    if (!container) {
+      console.warn("Missing container:", containerId);
+      return;
+    }
+    container.innerHTML = insHTML;
+
+    const s = document.createElement("script");
+    s.src = "//data527.click/js/responsive.js";
+    s.async = true;
+    document.body.appendChild(s);
+  }
+
+  // ============ Real Advertica Tags ============
+
+  const BANNER_1_HTML =
+    '<ins style="width: 300px;height:1050px" data-width="300" data-height="1050" ' +
+    'class="v372c6e8651" data-domain="//data527.click" ' +
+    'data-affquery="/906aadc4ea1b78eac7bb/372c6e8651/?placementName=default"></ins>';
+
+  const BANNER_2_HTML =
+    '<ins style="width: 300px;height:1050px" data-width="300" data-height="1050" ' +
+    'class="cca244ab96d" data-domain="//data527.click" ' +
+    'data-affquery="/906aadc4ea1b78eac7bb/ca244ab96d/?placementName=2"></ins>';
+
+  const BANNER_3_HTML =
+    '<ins style="width: 300px;height:1050px" data-width="300" data-height="1050" ' +
+    'class="td010d9fbd5" data-domain="//data527.click" ' +
+    'data-affquery="/906aadc4ea1b78eac7bb/d010d9fbd5/?placementName=3"></ins>';
+
+  const BANNER_4_HTML =
+    '<ins style="width: 300px;height:1050px" data-width="300" data-height="1050" ' +
+    'class="y747e2e1e73" data-domain="//data527.click" ' +
+    'data-affquery="/906aadc4ea1b78eac7bb/747e2e1e73/?placementName=4"></ins>';
+
+  const SMARTLINK_POPUNDER_SRC =
+    "//data527.click/394022a4415546a301de/1f8198af1c/?placementName=1";
+
+  const POPUP_SRC =
+    "//data527.click/e31597fecb27d40d3e23/74f935d1cc/?placementName=1";
+
+  // ============ 1. Banner Ad Tag - shown immediately on page load ============
+  function loadFirstBanner() {
+    injectBannerAd("banner-slot-1", BANNER_1_HTML);
+    console.log("Banner #1 loaded on page load");
+  }
+
+  // ============ 2-4. Banner Ad Tags - rotate via Scroll Trigger ============
+  const scrollBanners = [
+    function () {
+      injectBannerAd("banner-slot-2", BANNER_2_HTML);
+      console.log("Banner #2 triggered by scroll");
+    },
+    function () {
+      injectBannerAd("banner-slot-3", BANNER_3_HTML);
+      console.log("Banner #3 triggered by scroll");
+    },
+    function () {
+      injectBannerAd("banner-slot-4", BANNER_4_HTML);
+      console.log("Banner #4 triggered by scroll");
+    },
+  ];
+
+  function initScrollBanners() {
+    let triggeredCount = 0;
+    window.addEventListener("scroll", function () {
+      if (triggeredCount >= scrollBanners.length) return;
+
+      const scrollPercent =
+        window.scrollY / (document.body.scrollHeight - window.innerHeight);
+
+      const nextThreshold =
+        CONFIG.scrollBannerThreshold * (triggeredCount + 1);
+
+      if (scrollPercent >= nextThreshold) {
+        scrollBanners[triggeredCount]();
+        triggeredCount++;
       }
     });
+  }
 
-    // 3. Pop-up: delayed 25s (as per original engine)
-    setTimeout(function() {
-      const popup = document.createElement('script');
-      popup.src = "//data527.click/e31597fecb27d40d3e23/74f935d1cc/?placementName=1";
-      document.body.appendChild(popup);
-    }, 25000);
-  })();
+  // ============ 5. Smartlink / Pop under - triggered on first click ============
+  function initPopUnder() {
+    let fired = false;
+    document.addEventListener("click", function () {
+      if (fired || !canShowPop()) return;
+      fired = true;
+
+      injectScriptTag(SMARTLINK_POPUNDER_SRC);
+      console.log("Smartlink/Pop under triggered on first click");
+    });
+  }
+
+  // ============ 6. Pop up - SCROLL-BASED, with pending-retry logic ============
+  function initScrollTriggeredPopup() {
+    let fired = false;
+    let pending = false;
+
+    window.addEventListener("scroll", function () {
+      if (fired) return;
+
+      const scrollPercent =
+        window.scrollY / (document.body.scrollHeight - window.innerHeight);
+
+      if (scrollPercent >= CONFIG.popupScrollThreshold) {
+        pending = true;
+      }
+
+      if (pending && canShowPop()) {
+        fired = true;
+        injectScriptTag(POPUP_SRC);
+        console.log("Pop up triggered by scroll (60% of page)");
+      }
+    });
+  }
+
+  // ============ Run everything once the page has loaded ============
+  document.addEventListener("DOMContentLoaded", function () {
+    loadFirstBanner();
+    initScrollBanners();
+    initPopUnder();
+    initScrollTriggeredPopup();
+  });
+})();
 </script>
-<!-- ========== END MONETIZATION ENGINE ========== -->
 
 </body>
 </html>
+```
